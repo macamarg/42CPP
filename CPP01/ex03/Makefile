@@ -1,0 +1,33 @@
+NAME = violence
+
+SRC =	Weapon.cpp\
+		HumanA.cpp\
+		HumanB.cpp\
+		main.cpp\
+
+OBJ= $(SRC:.cpp=.o)
+
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+
+OPT = -g
+
+CXX = c++
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	$(CXX) $(CXXFLAGS) $(OPT) $^ -o $@
+	./$(NAME)
+
+clean:
+	rm -f $(OBJ)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
+
+valgrind: $(NAME)
+	valgrind --show-leak-kinds=all --leak-check=full ./$(NAME)
+
+.PHONY: clean fclean all re
